@@ -1,15 +1,10 @@
 package com.chess.backend.repository;
 
-import com.chess.backend.BackendApplication;
 import com.google.api.core.ApiFuture;
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 

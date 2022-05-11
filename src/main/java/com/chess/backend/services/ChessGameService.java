@@ -5,6 +5,7 @@ import com.chess.backend.domain.repository.IGameRepository;
 import com.chess.backend.gamemodel.*;
 import com.chess.backend.gamemodel.constants.Event;
 import com.chess.backend.gamemodel.constants.PieceType;
+import com.chess.backend.repository.GameRepositoryMock;
 import com.chess.backend.repository.metadata.EventMetadata;
 import com.chess.backend.repository.metadata.EventObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class ChessGameService {
     @Autowired
     public ChessGameService(@Qualifier("GameRepositoryClass") IGameRepository gameRepository ){
         this.gameRepository = gameRepository;
+    }
+
+    public ChessGameService(){
+        this.gameRepository = new GameRepositoryMock();
     }
 
 //    private static final ChessGameService CHESS_GAME_SERVICE = new ChessGameService();

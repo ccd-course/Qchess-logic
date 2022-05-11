@@ -307,11 +307,11 @@ public class ChessboardService {
     private static void rankUpPawn(Piece pawn, int posFrom, int posTo, int chessboardLength){
         if((Math.abs(posFrom-posTo) == 1) || ((Math.abs(posTo-posFrom)-chessboardLength) == -1)){
             pawn.setRank(pawn.getRank()+1);
-            System.out.println("Pawn Rank: " + pawn.getRank());
+            //System.out.println("Pawn Rank: " + pawn.getRank());
         } else {
             if((Math.abs(posFrom-posTo) == 2) || ((Math.abs(posTo-posFrom)-chessboardLength) == -2)){
                 pawn.setRank(pawn.getRank()+2);
-                System.out.println("Pawn Rank: " + pawn.getRank());
+                //System.out.println("Pawn Rank: " + pawn.getRank());
             }
         }
     }
