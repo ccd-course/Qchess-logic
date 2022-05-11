@@ -1,4 +1,3 @@
-com.chess.backend
 com.chess.backend.domain.controllers.objects
 com.chess.backend.domain.models
 com.chess.backend.domain.repository
