@@ -6,4 +6,6 @@ import com.chess.backend.restController.objects.NewGameObject;
 
 public interface INewGameService {
     int getNewGameID(NewGameObject gameObject);
+
+    int getNewGameID(String[] players);
 }

@@ -34,6 +34,7 @@ public class NewChessGameService implements INewGameService {
         this.gameService = gameService;
     }
 
+
     /**
      * This method tells the {@link ChessGameService} to create a new game and gets the id of the new game.
      *
@@ -43,7 +44,19 @@ public class NewChessGameService implements INewGameService {
     @Override
     public int getNewGameID(NewGameObject newGameObject) {
         String[] players = Arrays.stream(newGameObject.getPlayers()).map(NewPlayerObject::getPlayerName).toArray(String[]::new);
-        ChessGame game = this.gameService.createNewGame(players);
+        ChessGame game = ChessGameService.createNewGame(players);
+        int gameID = game.getId();
+        game.setType(GameMode.OFFLINE);
+        List<EventObject> events = new ArrayList<>();
+        events.add(new EventObject(Event.GAME_STARTED));
+        game.setEvents(events);
+        this.gameRepository.createNewGame(gameID, game, events);
+        return game.getId();
+    }
+
+    @Override
+    public int getNewGameID(String[] players) {
+        ChessGame game = ChessGameService.createNewGame(players);
         int gameID = game.getId();
         game.setType(GameMode.OFFLINE);
         List<EventObject> events = new ArrayList<>();

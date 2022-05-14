@@ -28,9 +28,9 @@ public class ChessGameService {
         this.gameRepository = gameRepository;
     }
 
-    public ChessGameService(){
-        this.gameRepository = new GameRepositoryMock();
-    }
+//    public ChessGameService(){
+//        this.gameRepository = new GameRepositoryMock();
+//    }
 
 //    private static final ChessGameService CHESS_GAME_SERVICE = new ChessGameService();
 

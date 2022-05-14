@@ -30,6 +30,7 @@ public class GameRepositoryMock implements IGameRepository {
 
     @Override
     public void updateGame(Integer gameId, ChessGame game, List<EventObject> events) {
+        game.getEvents().addAll(events);
         games.put(gameId, game);
     }
 
