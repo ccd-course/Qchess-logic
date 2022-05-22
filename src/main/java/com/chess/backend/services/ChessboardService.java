@@ -599,7 +599,7 @@ public class ChessboardService {
                 if(square != null && square.hasPiece()){
                     Piece piece = square.getPiece();
 
-                    if(piece.getPlayer().getName().equals(player.getName()) && !getValidMovesForPiece(chessboard, piece, player).isEmpty()){
+                    if(piece.getPlayer().getId() == player.getId() && !getValidMovesForPiece(chessboard, piece, player).isEmpty()){
                         return true;
                     }
                 }
@@ -607,6 +607,77 @@ public class ChessboardService {
         }
 
         return false;
+    }
+
+
+    public static ArrayList getAllPossibleActions(Chessboard chessboard, Player player){
+        ArrayList<Integer> actions = new ArrayList<Integer>();
+        for(int i = 0; i < chessboard.getSquares().size(); i++){
+            for(int j = 0; j < chessboard.getSquares().get(0).size(); j++){
+                Square from_square = chessboard.getSquares().get(i).get(j);
+
+                if(from_square != null && from_square.hasPiece()){
+                    Piece piece = from_square.getPiece();
+
+                    if(piece.getPlayer().getId() == player.getId()){
+                        ArrayList<Square> valid_moves = getValidMovesForPiece(chessboard, piece, player);
+                        for (Square to_square: valid_moves) {
+                            actions.add(moveToAction(chessboard, from_square, to_square));
+                        }
+                    }
+                }
+            }
+        }
+        return actions;
+    }
+
+    public static int moveToAction(Chessboard chessboard, Square from_square, Square destination_square){
+        int max_action_codes = 10 * chessboard.getNumberOfPlayers() + 31;
+        Position from_pos = from_square.getPos();
+        int action_code = -1;
+
+        // Diagonal and Knight
+        Position test_position = from_pos.diagFR(chessboard);
+        for(int i = 0; i < max_action_codes + 1; i++){
+            test_position = (i == 0) ? from_pos.diagFR(chessboard) :
+                            (i == 4) ? from_pos.diagBR(chessboard) :
+                            (i == 8) ? from_pos.diagBL(chessboard) :
+                            (i == 12) ? from_pos.diagFL(chessboard) :
+                            (i == 16) ? from_pos.knightFFR(chessboard) :
+                            (i == 17) ? from_pos.knightFRR(chessboard) :
+                            (i == 18) ? from_pos.knightBRR(chessboard) :
+                            (i == 19) ? from_pos.knightBBR(chessboard) :
+                            (i == 20) ? from_pos.knightBBL(chessboard) :
+                            (i == 21) ? from_pos.knightBLL(chessboard) :
+                            (i == 22) ? from_pos.knightFLL(chessboard) :
+                            (i == 23) ? from_pos.knightFFL(chessboard) :
+                            (i == 24) ? from_pos.right(chessboard) :
+                            (i == 28) ? from_pos.left(chessboard) :
+                            (i == 32) ? from_pos.forward(chessboard) :
+                                    test_position;
+
+            if(test_position == null){
+                break;
+            }
+            if(destination_square.getPosition().equals(
+                    test_position
+            )){
+                action_code = i;
+                break;
+            }
+            else{
+                test_position = (i < 4) ? test_position.diagFR(chessboard) :
+                                (i < 8) ? test_position.diagBR(chessboard) :
+                                (i < 12) ? test_position.diagBL(chessboard) :
+                                (i < 15) ? test_position.diagFL(chessboard) :
+                                (i < 28 && i > 23) ? test_position.right(chessboard) :
+                                (i < 32 && i > 27) ? test_position.left(chessboard) :
+                                (i > 31) ? test_position.forward(chessboard) : null;
+            }
+        }
+
+        int from_pos_id = from_pos.get_id(5);
+        return action_code + max_action_codes * from_pos_id;
     }
 
     /**

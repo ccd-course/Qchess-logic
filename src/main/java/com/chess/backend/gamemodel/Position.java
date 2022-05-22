@@ -144,6 +144,126 @@ public class Position {
         return this.forward(chessboard).right(chessboard);
     }
 
+    /**
+     * Returns the position of a knight movement after FFR.
+     * <p>
+     * Composition of forward/top and right.
+     *
+     * @param chessboard Chessboard context
+     * @return Position
+     */
+    public Position knightFFR(IBoard chessboard) {
+        Position first_step = this.forward(chessboard);
+        Position second_step = first_step.forward(chessboard);
+        if(second_step == null) return null;
+        return second_step.right(chessboard);
+    }
+
+    /**
+     * Returns the position of a knight movement after FRR.
+     * <p>
+     * Composition of forward/top and right.
+     *
+     * @param chessboard Chessboard context
+     * @return Position
+     */
+    public Position knightFRR(IBoard chessboard) {
+        Position first_step = this.forward(chessboard);
+        Position second_step = first_step.right(chessboard);
+        if(second_step == null) return null;
+        return second_step.right(chessboard);
+    }
+
+    /**
+     * Returns the position of a knight movement after BRR.
+     * <p>
+     * Composition of backwards and right.
+     *
+     * @param chessboard Chessboard context
+     * @return Position
+     */
+    public Position knightBRR(IBoard chessboard) {
+        Position first_step = this.backward(chessboard);
+        Position second_step = first_step.right(chessboard);
+        if(second_step == null) return null;
+        return second_step.right(chessboard);
+    }
+
+    /**
+     * Returns the position of a knight movement after BBR.
+     * <p>
+     * Composition of backwards and right.
+     *
+     * @param chessboard Chessboard context
+     * @return Position
+     */
+    public Position knightBBR(IBoard chessboard) {
+        Position first_step = this.backward(chessboard);
+        Position second_step = first_step.backward(chessboard);
+        if(second_step == null) return null;
+        return second_step.right(chessboard);
+    }
+
+    /**
+     * Returns the position of a knight movement after BBL.
+     * <p>
+     * Composition of backwards and left.
+     *
+     * @param chessboard Chessboard context
+     * @return Position
+     */
+    public Position knightBBL(IBoard chessboard) {
+        Position first_step = this.backward(chessboard);
+        Position second_step = first_step.backward(chessboard);
+        if(second_step == null) return null;
+        return second_step.left(chessboard);
+    }
+
+    /**
+     * Returns the position of a knight movement after BLL.
+     * <p>
+     * Composition of backwards and left.
+     *
+     * @param chessboard Chessboard context
+     * @return Position
+     */
+    public Position knightBLL(IBoard chessboard) {
+        Position first_step = this.backward(chessboard);
+        Position second_step = first_step.left(chessboard);
+        if(second_step == null) return null;
+        return second_step.left(chessboard);
+    }
+
+    /**
+     * Returns the position of a knight movement after FLL.
+     * <p>
+     * Composition of forward and left.
+     *
+     * @param chessboard Chessboard context
+     * @return Position
+     */
+    public Position knightFLL(IBoard chessboard) {
+        Position first_step = this.forward(chessboard);
+        Position second_step = first_step.left(chessboard);
+        if(second_step == null) return null;
+        return second_step.left(chessboard);
+    }
+
+    /**
+     * Returns the position of a knight movement after FFL.
+     * <p>
+     * Composition of forward and left.
+     *
+     * @param chessboard Chessboard context
+     * @return Position
+     */
+    public Position knightFFL(IBoard chessboard) {
+        Position first_step = this.forward(chessboard);
+        Position second_step = first_step.forward(chessboard);
+        if(second_step == null) return null;
+        return second_step.left(chessboard);
+    }
+
     public Position getPosFromDir(IBoard chessboard, Position.Direction direction){
         return switch (direction) {
             case LEFT -> this.left(chessboard);
@@ -155,6 +275,10 @@ public class Position {
             case DIAGONAL_FL -> this.diagFL(chessboard);
             case DIAGONAL_FR -> this.diagFR(chessboard);
         };
+    }
+
+    public int get_id(int board_x_max){
+        return x + board_x_max * y;
     }
 
     @Override
