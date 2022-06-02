@@ -30,6 +30,12 @@ public class Position {
         this.y = y;
     }
 
+    public static Position from_id(int id, int board_x_max) {
+        int x = id % board_x_max;
+        int y = id / board_x_max;
+        return new Position(x, y);
+    }
+
     /**
      * Returns the position left to the current position.
      * <p>
